@@ -343,10 +343,13 @@ export default function Home() {
             <PWAInstall />
 
             <div className="text-chocolate">
-              <p className="text-lg">
-                © 2024 Sabores de Zissou - Confeitaria e Panificadora Artesanal
+              <p className="text-sm sm:text-lg whitespace-nowrap">
+                © 2024 Sabores de Zissou
               </p>
-              <p className="text-sm mt-2">
+              <p className="text-xs sm:text-sm mt-1">
+                Confeitaria e Panificadora Artesanal
+              </p>
+              <p className="text-xs mt-2">
                 Feito com 💝 para adoçar seus dias
               </p>
             </div>
