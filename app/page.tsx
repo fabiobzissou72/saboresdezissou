@@ -108,6 +108,24 @@ export default function Home() {
         throw error
       }
 
+      // Se estiver em produtos do dia e não houver produtos, buscar encomendas
+      if (activeSection === 'produtos-do-dia' && (!data || data.length === 0)) {
+        const { data: encomendaData } = await supabase
+          .from('products')
+          .select(`
+            *,
+            category:categories(id, name, slug)
+          `)
+          .eq('is_active', true)
+          .eq('is_special_order', true)
+          .order('name')
+
+        if (encomendaData && encomendaData.length > 0) {
+          setProducts(encomendaData)
+          return
+        }
+      }
+
       if (data) {
         setProducts(data)
       } else {
@@ -258,22 +276,6 @@ export default function Home() {
                 />
               ))}
             </div>
-          ) : activeSection === 'produtos-do-dia' ? (
-            <div className="text-center py-8">
-              <div className="text-4xl mb-4">☕</div>
-              <h3 className="text-xl font-bold text-wine mb-4">
-                Ainda não temos produtos do dia hoje
-              </h3>
-              <p className="text-chocolate text-lg mb-6">
-                Mas você pode conferir nossas delícias sob encomenda!
-              </p>
-              <button
-                onClick={() => setActiveSection('encomendas')}
-                className="btn-primary text-lg py-3 px-6"
-              >
-                🎁 Ver Encomendas
-              </button>
-            </div>
           ) : (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">😔</div>
@@ -303,7 +305,7 @@ export default function Home() {
             {/* Instagram */}
             <div>
               <a
-                href="https://instagram.com/saboreszissou"
+                href="https://www.instagram.com/saboresdezissou?igsh=MWprdG9nYzliNm02cQ=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-wine hover:text-wine-light transition-all duration-200 text-lg font-medium"

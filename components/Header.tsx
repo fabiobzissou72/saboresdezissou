@@ -50,7 +50,7 @@ export default function Header({ activeSection = 'produtos-do-dia', onSectionCha
         <div className="flex items-center justify-center mb-4">
           <div className="flex items-center gap-3">
             {logoUrl && (
-              <div className="w-20 h-20 relative">
+              <div className="w-24 h-24 relative">
                 <Image
                   src={logoUrl}
                   alt={companyName}
@@ -72,8 +72,8 @@ export default function Header({ activeSection = 'produtos-do-dia', onSectionCha
             <button
               onClick={() => onSectionChange('produtos-do-dia')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${activeSection === 'produtos-do-dia'
-                  ? 'bg-wine text-white'
-                  : 'bg-pink-soft text-wine hover:bg-pink-300'
+                ? 'bg-wine text-white'
+                : 'bg-pink-soft text-wine hover:bg-pink-300'
                 }`}
             >
               🍰 Produtos do Dia
@@ -81,8 +81,8 @@ export default function Header({ activeSection = 'produtos-do-dia', onSectionCha
             <button
               onClick={() => onSectionChange('encomendas')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${activeSection === 'encomendas'
-                  ? 'bg-wine text-white'
-                  : 'bg-pink-soft text-wine hover:bg-pink-300'
+                ? 'bg-wine text-white'
+                : 'bg-pink-soft text-wine hover:bg-pink-300'
                 }`}
             >
               🎁 Encomendas
