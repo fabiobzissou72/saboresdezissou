@@ -234,7 +234,7 @@ export default function OrderModal({ product, isOpen, onClose }: OrderModalProps
         {/* Product Media */}
         <div className="border-b border-gray-200">
           {/* Área de Mídia */}
-          <div className="relative h-80 bg-gray-100">
+          <div className="relative h-96 bg-gray-100">
             {showVideo && product.youtube_embed_url ? (
               <div className="w-full h-full">
                 <iframe
@@ -254,44 +254,43 @@ export default function OrderModal({ product, isOpen, onClose }: OrderModalProps
               </div>
             ) : images.length > 0 ? (
               <>
-                <Image
-                  src={images[currentImageIndex]}
-                  alt={product.name}
-                  fill
-                  className="object-contain"
-                />
+                <div
+                  className="w-full h-full relative cursor-grab active:cursor-grabbing"
+                  onTouchStart={(e) => {
+                    const touch = e.touches[0];
+                    (e.currentTarget as HTMLDivElement).dataset.touchStartX = String(touch.clientX);
+                  }}
+                  onTouchEnd={(e) => {
+                    const startX = Number((e.currentTarget as HTMLDivElement).dataset.touchStartX);
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+                    if (Math.abs(diff) > 50) {
+                      if (diff > 0) nextImage();
+                      else prevImage();
+                    }
+                  }}
+                >
+                  <Image
+                    src={images[currentImageIndex]}
+                    alt={product.name}
+                    fill
+                    className="object-contain pointer-events-none"
+                  />
+                </div>
 
-                {/* Navegação de Imagens */}
+                {/* Indicadores (só mostra se tiver mais de 1 imagem) */}
                 {images.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevImage}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all"
-                      aria-label="Imagem anterior"
-                    >
-                      ←
-                    </button>
-                    <button
-                      onClick={nextImage}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition-all"
-                      aria-label="Próxima imagem"
-                    >
-                      →
-                    </button>
-
-                    {/* Indicadores */}
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
-                      {images.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentImageIndex(index)}
-                          className={`w-2 h-2 rounded-full transition-all ${index === currentImageIndex ? 'bg-white' : 'bg-white bg-opacity-50'
-                            }`}
-                          aria-label={`Ir para imagem ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  </>
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+                    {images.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`w-2 h-2 rounded-full transition-all ${index === currentImageIndex ? 'bg-wine' : 'bg-gray-400'
+                          }`}
+                        aria-label={`Ir para imagem ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 )}
 
                 {/* Botão de Vídeo */}

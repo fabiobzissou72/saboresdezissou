@@ -50,7 +50,7 @@ export default function Header({ activeSection = 'produtos-do-dia', onSectionCha
         <div className="flex items-center justify-center mb-4">
           <div className="flex items-center gap-3">
             {logoUrl && (
-              <div className="w-24 h-24 relative">
+              <div className="w-32 h-32 relative">
                 <Image
                   src={logoUrl}
                   alt={companyName}
