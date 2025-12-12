@@ -158,18 +158,19 @@ export default function OrderModal({ product, isOpen, onClose }: OrderModalProps
     setIsSubmitting(true)
 
     try {
+      // Incluir quantidade e total nas observações
+      const quantityInfo = quantity > 1 ? `\n[Quantidade: ${quantity} | Total: R$ ${totalPrice.toFixed(2)}]` : '';
+
       const orderData = {
         product_id: product.id,
         product_name: product.name,
         product_price: product.price,
-        quantity: quantity,
-        total_price: totalPrice,
         customer_name: data.customer_name,
         customer_whatsapp: data.customer_whatsapp.replace(/\D/g, ''),
         delivery_address: data.delivery_address,
         payment_method: data.payment_method,
         delivery_date: data.delivery_date || null,
-        extra_observations: data.extra_observations || null,
+        extra_observations: (data.extra_observations || '') + quantityInfo,
         status: 'pending'
       }
 
@@ -233,7 +234,7 @@ export default function OrderModal({ product, isOpen, onClose }: OrderModalProps
         {/* Product Media */}
         <div className="border-b border-gray-200">
           {/* Área de Mídia */}
-          <div className="relative h-56 bg-gray-100">
+          <div className="relative h-80 bg-gray-100">
             {showVideo && product.youtube_embed_url ? (
               <div className="w-full h-full">
                 <iframe
