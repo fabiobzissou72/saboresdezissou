@@ -274,7 +274,7 @@ export default function OrderModal({ product, isOpen, onClose }: OrderModalProps
                     src={images[currentImageIndex]}
                     alt={product.name}
                     fill
-                    className="object-contain pointer-events-none"
+                    className="object-cover pointer-events-none"
                   />
                 </div>
 
